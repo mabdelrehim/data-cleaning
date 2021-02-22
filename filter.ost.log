@@ -1,0 +1,9 @@
+Downloading emoji data ...
+... OK (Got response in 0.16 seconds)
+Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
+... OK
+-- Applying laser filter to ../open-subtitles-2018/data
+---- Calculated laser embeddings for 6565480 sentences from source language in 134.0,  mins , 41.921202421188354 ,  secs
+(6565480, 1024)
+---- Calculated laser embeddings for 6565480 sentences from target language in 38.0,  mins , 45.35693120956421,  secs
+(6565480, 1024)

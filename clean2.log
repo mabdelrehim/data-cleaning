@@ -1,0 +1,88 @@
+Downloading emoji data ...
+... OK (Got response in 0.13 seconds)
+Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
+... OK
+Cleanining ../elrc
+--Cleanining data
+---- Number of samples in ../elrc/data before cleaning:  144
+---- Removing unwanted characters for took  0.0  mins  0.1506812572479248  secs
+---- Removed  0  pairs that became empty after removing unwanted characters in  0.0  mins  0.006147861480712891  secs
+---- Removed  62  pairs that contain too many tokens from an external language in  0.0  mins  0.006147861480712891  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  0.6976194381713867  secs
+---- Removed  6  pairs that are too different in lengths 0.0  mins  0.036926984786987305  secs
+---- Removed  0  pairs that are duplicates in source/target language in  0.0  mins  0.0030968189239501953  secs
+---- Number of samples in  data  after cleaning:  76
+../elrc cleaning took  0.0  mins  0.9105455875396729  secs
+Cleanining ../news-comm
+--Cleanining data
+---- Number of samples in ../news-comm/data before cleaning:  74699
+---- Removing unwanted characters for took  2.0  mins  1.6155064105987549  secs
+---- Removed  1  pairs that became empty after removing unwanted characters in  0.0  mins  0.7688412666320801  secs
+---- Removed  2140  pairs that contain too many tokens from an external language in  0.0  mins  0.7688412666320801  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  54.619083642959595  secs
+---- Removed  1397  pairs that are too different in lengths 0.0  mins  37.22846794128418  secs
+---- Removed  55  pairs that are duplicates in source/target language in  0.0  mins  0.24435830116271973  secs
+---- Number of samples in  data  after cleaning:  71106
+../news-comm cleaning took  3.0  mins  42.706339836120605  secs
+Cleanining ../qed
+--Cleanining data
+---- Number of samples in ../qed/data before cleaning:  13123
+---- Removing unwanted characters for took  0.0  mins  5.27046275138855  secs
+---- Removed  5  pairs that became empty after removing unwanted characters in  0.0  mins  0.13428211212158203  secs
+---- Removed  3023  pairs that contain too many tokens from an external language in  0.0  mins  0.13428211212158203  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  2.8992903232574463  secs
+---- Removed  450  pairs that are too different in lengths 0.0  mins  2.478879451751709  secs
+---- Removed  79  pairs that are duplicates in source/target language in  0.0  mins  0.011215448379516602  secs
+---- Number of samples in  data  after cleaning:  9566
+../qed cleaning took  0.0  mins  11.556677103042603  secs
+Cleanining ../tanzil
+--Cleanining data
+---- Number of samples in ../tanzil/data before cleaning:  187092
+---- Removing unwanted characters for took  2.0  mins  9.044329404830933  secs
+---- Removed  0  pairs that became empty after removing unwanted characters in  0.0  mins  1.9158501625061035  secs
+---- Removed  2244  pairs that contain too many tokens from an external language in  0.0  mins  1.9158501625061035  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  1.0  mins  24.112513780593872  secs
+---- Removed  1195  pairs that are too different in lengths 0.0  mins  56.08359384536743  secs
+---- Removed  177519  pairs that are duplicates in source/target language in  0.0  mins  0.15264129638671875  secs
+---- Number of samples in  data  after cleaning:  6134
+../tanzil cleaning took  4.0  mins  43.91018605232239  secs
+Cleanining ../ted-2013
+--Cleanining data
+---- Number of samples in ../ted-2013/data before cleaning:  154579
+---- Removing unwanted characters for took  1.0  mins  17.904001712799072  secs
+---- Removed  2  pairs that became empty after removing unwanted characters in  0.0  mins  1.5622847080230713  secs
+---- Removed  5559  pairs that contain too many tokens from an external language in  0.0  mins  1.5622847080230713  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  41.77231502532959  secs
+---- Removed  831  pairs that are too different in lengths 0.0  mins  39.656538009643555  secs
+---- Removed  1376  pairs that are duplicates in source/target language in  0.0  mins  0.19242644309997559  secs
+---- Number of samples in  data  after cleaning:  146811
+../ted-2013 cleaning took  2.0  mins  50.1638560295105  secs
+Cleanining ../ted-2020
+--Cleanining data
+---- Number of samples in ../ted-2020/data before cleaning:  16382
+---- Removing unwanted characters for took  0.0  mins  7.660897254943848  secs
+---- Removed  173  pairs that became empty after removing unwanted characters in  0.0  mins  0.16667437553405762  secs
+---- Removed  4707  pairs that contain too many tokens from an external language in  0.0  mins  0.16667437553405762  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  4.119046449661255  secs
+---- Removed  102  pairs that are too different in lengths 0.0  mins  3.0956225395202637  secs
+---- Removed  72  pairs that are duplicates in source/target language in  0.0  mins  0.015224218368530273  secs
+---- Number of samples in  data  after cleaning:  11328
+../ted-2020 cleaning took  0.0  mins  16.017674446105957  secs
+Cleanining ../tico-19
+--Cleanining data
+---- Number of samples in ../tico-19/data before cleaning:  3071
+---- Removing unwanted characters for took  0.0  mins  2.6419060230255127  secs
+---- Removed  0  pairs that became empty after removing unwanted characters in  0.0  mins  0.033089399337768555  secs
+---- Removed  24  pairs that contain too many tokens from an external language in  0.0  mins  0.033089399337768555  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  1.0293023586273193  secs
+---- Removed  3  pairs that are too different in lengths 0.0  mins  0.97279953956604  secs
+---- Removed  9  pairs that are duplicates in source/target language in  0.0  mins  0.007309436798095703  secs
+---- Number of samples in  data  after cleaning:  3035
+../tico-19 cleaning took  0.0  mins  4.934435844421387  secs

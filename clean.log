@@ -1,0 +1,24 @@
+Downloading emoji data ...
+... OK (Got response in 0.13 seconds)
+Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
+... OK
+Cleanining ../bible
+--Cleanining data
+---- Number of samples in ../bible/data before cleaning:  124378
+---- Removing unwanted characters for took  1.0  mins  32.09657526016235  secs
+---- Removed  0  pairs that became empty after removing unwanted characters in  0.0  mins  1.2679474353790283  secs
+---- Removed  855  pairs that contain too many tokens from an external language in  0.0  mins  1.2679474353790283  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  0.0  mins  51.41796278953552  secs
+---- Removed  58293  pairs that have low laser cosine similarity in  43.0  mins  42.48804807662964  secs
+---- Removed  44000  pairs that are duplicates in source/target language in  0.0  mins  0.07697772979736328  secs
+---- Number of samples in  data  after cleaning:  21230
+../bible cleaning took  46.0  mins  14.138826370239258  secs
+Cleanining ../cc-aligned
+--Cleanining data
+---- Number of samples in ../cc-aligned/data before cleaning:  15181417
+---- Removing unwanted characters for took  118.0  mins  7.2034595012664795  secs
+---- Removed  338  pairs that became empty after removing unwanted characters in  2.0  mins  29.80965566635132  secs
+---- Removed  5613670  pairs that contain too many tokens from an external language in  2.0  mins  29.80965566635132  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  46.0  mins  26.37653088569641  secs

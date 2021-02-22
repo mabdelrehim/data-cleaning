@@ -1,0 +1,16 @@
+Downloading emoji data ...
+... OK (Got response in 0.15 seconds)
+Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
+... OK
+Cleanining ../unpc
+--Cleanining data
+---- Number of samples in ../unpc/data before cleaning:  17451549
+---- Removing unwanted characters for took  257.0  mins  38.822673082351685  secs
+---- Removed  2218  pairs that became empty after removing unwanted characters in  2.0  mins  58.93194913864136  secs
+---- Removed  2502583  pairs that contain too many tokens from an external language in  2.0  mins  58.93194913864136  secs
+---- tokenizing sentences
+---- Segmentation and/or tokenization took  98.0  mins  18.173386812210083  secs
+---- Removed  43939  pairs that are too different in lengths 79.0  mins  42.78218102455139  secs
+---- Removed  3062394  pairs that are duplicates in source/target language in  0.0  mins  40.706528186798096  secs
+---- Number of samples in  data  after cleaning:  11840415
+../unpc cleaning took  457.0  mins  52.46804881095886  secs

@@ -1,0 +1,12 @@
+Downloading emoji data ...
+... OK (Got response in 0.15 seconds)
+Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
+... OK
+-- Applying laser filter to ../ted-2013/data
+---- Calculated laser embeddings for 146811 sentences from source language in 5.0,  mins , 13.32010555267334 ,  secs
+(146811, 1024)
+---- Calculated laser embeddings for 146811 sentences from target language in 1.0,  mins , 36.15682816505432,  secs
+(146811, 1024)
+---- Calculated cosine for 146811 pairs in 0.0,  mins , 39.58605194091797 % 60,  secs
+---- Number of samples in ../ted-2013/data before cleaning:  146811
+---- Removed  17840  pairs that are too different in lengths 0.0  mins  0.024536609649658203  secs
