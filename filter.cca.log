@@ -1,7 +1,0 @@
-Downloading emoji data ...
-... OK (Got response in 0.14 seconds)
-Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
-... OK
--- Applying laser filter to ../cc-aligned/data
----- Calculated laser embeddings for 6942273 sentences from source language in 257.0,  mins , 36.816816091537476 ,  secs
-(6942273, 1024)
