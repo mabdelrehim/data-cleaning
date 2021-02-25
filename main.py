@@ -20,7 +20,7 @@ def get_args_parser():
     parser.add_argument("--batch_size", 
                             type=int,
                             default= 4096, 
-                            help="batch size to use when using the LTP chinese segmenter (used if one of src_lang or trg_lang is zh)")
+                            help="batch size to use if using the LTP chinese segmenter (otherwise ignored) (used if one of src_lang or trg_lang is zh)")
     parser.add_argument("-s",
                             "--src_lang", 
                             type=str, 

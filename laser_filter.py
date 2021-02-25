@@ -31,7 +31,7 @@ def get_args_parser():
     parser.add_argument("--batch_size", 
                             type=int,
                             default= 4096, 
-                            help="batch size to use with laser filteer")
+                            help="batch size to use with laser filter")
     parser.add_argument("--laser_thresh", 
                             type=int, 
                             help="threshold percentage for laser similarity (0-100)")
@@ -116,7 +116,7 @@ def main(args):
                 {
                     args.src_lang: src_sents,
                     args.trg_lang: trg_sents,
-                    "similarities": batched_laser_filter(laser, src_sents, trg_sents, args.src_lang, args.trg_lang)
+                    "similarities": batched_laser_filter(laser, src_sents, trg_sents, args.src_lang, args.trg_lang, batch_size=args.batch_size)
                 }
             )
 
