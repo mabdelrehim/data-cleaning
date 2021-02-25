@@ -7,3 +7,6 @@ Writing emoji data to /home/nlp-mt/.demoji/codes.json ...
 (6565480, 1024)
 ---- Calculated laser embeddings for 6565480 sentences from target language in 38.0,  mins , 45.35693120956421,  secs
 (6565480, 1024)
+---- Calculated cosine for 6565480 pairs in 29.0,  mins , 1748.8109469413757 % 60,  secs
+---- Number of samples in ../open-subtitles-2018/data before cleaning:  6565480
+---- Removed  2389050  pairs that are too different in lengths 0.0  mins  0.8935859203338623  secs
