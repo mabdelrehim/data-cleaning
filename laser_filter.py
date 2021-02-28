@@ -95,14 +95,14 @@ def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, ba
     #print(np.array(embeddings_b).shape)
     similarities = []
     start = time.time()
-    for a, b in zip(embeddings_a, embeddings_b):
-        similarities.append(cosine_similarity([a], [b]).flatten()[0])
+    #for a, b in zip(embeddings_a, embeddings_b):
+    #    similarities.append(cosine_similarity([a], [b]).flatten()[0])
     
-    #pool=Pool()
-    #embeddings_a, embedding_b=parallelize_np_array(embeddings_a, os.cpu_count()), parallelize_np_array(embeddings_b, os.cpu_count())
-    #similarities=serialize_list(list(pool.starmap(my_cosine_similarity, zip(embeddings_a, embeddings_b))))
-    #pool.close()
-    #pool.join()
+    pool=Pool()
+    embeddings_a, embeddings_b=np.array_split(np.array(embeddings_a), os.cpu_count()), np.array_split(np.array(embeddings_b), os.cpu_count())
+    similarities=serialize_list(list(pool.starmap(my_cosine_similarity, zip(embeddings_a, embeddings_b))))
+    pool.close()
+    pool.join()
     end = time.time()
     elapsed = end - start
     #print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
@@ -113,7 +113,7 @@ def batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang:
     This function is made to decrease memory used by laser filtering.
     """
     if cosine_batch_size==-1:
-        cosine_batch_size=2*batch_size
+        cosine_batch_size=4*batch_size
 
     num_batches=len(sources)//cosine_batch_size
     sources, targets = parallelize_list(sources, num_batches), parallelize_list(targets, num_batches)
