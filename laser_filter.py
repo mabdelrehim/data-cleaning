@@ -68,31 +68,31 @@ def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, ba
     start = time.time()
     i = 0
     embeddings_a = []
-    with tqdm(total=len(sources) // batch_size) as pbar:
-        while i < len(sources):
-            embeddings_a.extend(laser_model.embed_sentences(
-            sources[i:i+batch_size],
-            lang=src_lang))
-            i = i + batch_size
-            pbar.update(1)
+    #with tqdm(total=len(sources) // batch_size) as pbar:
+    while i < len(sources):
+        embeddings_a.extend(laser_model.embed_sentences(
+        sources[i:i+batch_size],
+        lang=src_lang))
+        i = i + batch_size
+        #    pbar.update(1)
     end = time.time()
     elapsed = end - start
-    print(f"---- Calculated laser embeddings for {len(sources)} sentences from source language in {elapsed // 60},  mins , {elapsed % 60} ,  secs")
-    print(np.array(embeddings_a).shape)
+    #print(f"---- Calculated laser embeddings for {len(sources)} sentences from source language in {elapsed // 60},  mins , {elapsed % 60} ,  secs")
+    #print(np.array(embeddings_a).shape)
     start = time.time()
     i = 0
     embeddings_b = []
-    with tqdm(total=len(targets) // batch_size) as pbar:
-        while i < len(targets):
-            embeddings_b.extend(laser_model.embed_sentences(
-            targets[i:i+batch_size],
-            lang=trg_lang))
-            i = i + batch_size
-            pbar.update(1)
+    #with tqdm(total=len(targets) // batch_size) as pbar:
+    while i < len(targets):
+        embeddings_b.extend(laser_model.embed_sentences(
+        targets[i:i+batch_size],
+        lang=trg_lang))
+        i = i + batch_size
+        #    pbar.update(1)
     end = time.time()
     elapsed = end - start
-    print(f"---- Calculated laser embeddings for {len(targets)} sentences from target language in {elapsed // 60},  mins , {elapsed % 60},  secs")
-    print(np.array(embeddings_b).shape)
+    #print(f"---- Calculated laser embeddings for {len(targets)} sentences from target language in {elapsed // 60},  mins , {elapsed % 60},  secs")
+    #print(np.array(embeddings_b).shape)
     similarities = []
     start = time.time()
     #for a, b in tqdm(zip(embeddings_a, embeddings_b)):
