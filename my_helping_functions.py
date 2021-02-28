@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 from my_constants import *
 
@@ -44,6 +45,18 @@ def parallelize_list(l, n_cores=os.cpu_count()):
             parallelizable_data.append(l[i:i+step_size]) if i+step_size < len(l) else parallelizable_data.append(l[i:])
 
     return parallelizable_data
+
+def parallelize_np_array(l, n_cores=os.cpu_count()):
+    parallelizable_data=[]
+    if len(l)>0:
+        step_size=len(l)//n_cores
+        for i in range(0, len(l), step_size):
+            parallelizable_data.append(l[i:i+step_size]) if i+step_size < len(l) else parallelizable_data.append(l[i:])
+
+    return parallelizable_data
+
+
+
 
 def serialize_list(l):
     # Note: it serializes only one level.
