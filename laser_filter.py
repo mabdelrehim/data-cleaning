@@ -5,15 +5,13 @@ import os
 import time
 from utils import bitext_utils as bitext_utils
 from utils import sentence_utils as sentence_utils
+from my_helping_functions import parallelize_list, serialize_list
 import fasttext
 from laserembeddings import Laser
 import camel_tools as camel
 from camel_tools.utils.charmap import CharMapper
 import argparse
 from pathlib import Path
-import pandas as pd
-import os
-import time
 import fasttext
 from laserembeddings import Laser
 from tqdm import tqdm
@@ -53,7 +51,7 @@ def get_args_parser():
 
     return parser
 
-def batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
+def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
     """
     
     The laser model tries to embed sentences that are of the same meaning with similar embeddings
@@ -97,6 +95,20 @@ def batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang:
     print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
     return similarities
 
+def Batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
+    """
+    This function is made to decrease memory used by laser filtering.
+    """
+    num_batches=len(sources)//batch_size
+    sources, targets = parallelize_list(sources, num_batches), parallelize_list(targets, num_batches)
+    similarities=[]
+
+    with tqdm(total=num_batches) as progress_bar:
+        for src_batch, trg_batch in zip(sources, targets):
+            similarities.append(laser_filter(laser_model, src_batch, tgt_batch, src_lang, trg_lang, batch_size))
+            progress_bar.update(1)
+
+    return serialize_list(similarities)
 
 
 def main(args):
