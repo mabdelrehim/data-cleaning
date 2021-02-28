@@ -3,6 +3,7 @@ from pathlib import Path
 import pandas as pd
 import os
 import time
+from multiprocessing import Pool
 from utils import bitext_utils as bitext_utils
 from utils import sentence_utils as sentence_utils
 from my_helping_functions import parallelize_list, serialize_list
@@ -51,6 +52,12 @@ def get_args_parser():
 
     return parser
 
+def my_cosine_similarity(embeddings_a, embeddings_b):
+    similarities=[]
+    for a, b in tqdm(zip(embeddings_a, embeddings_b)):
+        similarities.append(cosine_similarity([a], [b]).flatten()[0])
+    return similarities
+
 def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
     """
     
@@ -88,18 +95,27 @@ def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, ba
     print(np.array(embeddings_b).shape)
     similarities = []
     start = time.time()
-    for a, b in tqdm(zip(embeddings_a, embeddings_b)):
-        similarities.append(cosine_similarity([a], [b]).flatten()[0])
+    #for a, b in tqdm(zip(embeddings_a, embeddings_b)):
+    #    similarities.append(cosine_similarity([a], [b]).flatten()[0])
+    
+    pool=Pool()
+    embeddings_a, embedding_b=parallelize_list(embeddings_a, os.cpu_count()), parallelize_list(embeddings_b, os.cpu_count())
+    similarities=serialize_list(list(pool.map(my_cosine_similarity, zip(embeddings_a, embeddings_b))))
+    pool.close()
+    pool.join()
     end = time.time()
     elapsed = end - start
     print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
     return similarities
 
-def Batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
+def Batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, cosine_batch_size=-1,  batch_size=2048):
     """
     This function is made to decrease memory used by laser filtering.
     """
-    num_batches=len(sources)//batch_size
+    if cosine_batch_size=-1:
+        cosine_batch_size=2*batch_size
+
+    num_batches=len(sources)//cosine_batch_size
     sources, targets = parallelize_list(sources, num_batches), parallelize_list(targets, num_batches)
     similarities=[]
 
