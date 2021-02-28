@@ -6,7 +6,7 @@ import time
 from multiprocessing import Pool
 from utils import bitext_utils as bitext_utils
 from utils import sentence_utils as sentence_utils
-from my_helping_functions import parallelize_list, serialize_list
+from my_helping_functions import parallelize_np_array, parallelize_list, serialize_list
 import fasttext
 from laserembeddings import Laser
 import camel_tools as camel
@@ -54,7 +54,7 @@ def get_args_parser():
 
 def my_cosine_similarity(embeddings_a, embeddings_b):
     similarities=[]
-    for a, b in tqdm(zip(embeddings_a, embeddings_b)):
+    for a, b in zip(embeddings_a, embeddings_b):
         similarities.append(cosine_similarity([a], [b]).flatten()[0])
     return similarities
 
@@ -95,24 +95,24 @@ def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, ba
     #print(np.array(embeddings_b).shape)
     similarities = []
     start = time.time()
-    #for a, b in tqdm(zip(embeddings_a, embeddings_b)):
-    #    similarities.append(cosine_similarity([a], [b]).flatten()[0])
+    for a, b in zip(embeddings_a, embeddings_b):
+        similarities.append(cosine_similarity([a], [b]).flatten()[0])
     
-    pool=Pool()
-    embeddings_a, embedding_b=parallelize_list(embeddings_a, os.cpu_count()), parallelize_list(embeddings_b, os.cpu_count())
-    similarities=serialize_list(list(pool.map(my_cosine_similarity, zip(embeddings_a, embeddings_b))))
-    pool.close()
-    pool.join()
+    #pool=Pool()
+    #embeddings_a, embedding_b=parallelize_np_array(embeddings_a, os.cpu_count()), parallelize_np_array(embeddings_b, os.cpu_count())
+    #similarities=serialize_list(list(pool.starmap(my_cosine_similarity, zip(embeddings_a, embeddings_b))))
+    #pool.close()
+    #pool.join()
     end = time.time()
     elapsed = end - start
-    print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
+    #print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
     return similarities
 
-def Batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, cosine_batch_size=-1,  batch_size=2048):
+def batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, cosine_batch_size=-1,  batch_size=2048):
     """
     This function is made to decrease memory used by laser filtering.
     """
-    if cosine_batch_size=-1:
+    if cosine_batch_size==-1:
         cosine_batch_size=2*batch_size
 
     num_batches=len(sources)//cosine_batch_size
@@ -121,7 +121,7 @@ def Batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang:
 
     with tqdm(total=num_batches) as progress_bar:
         for src_batch, trg_batch in zip(sources, targets):
-            similarities.append(laser_filter(laser_model, src_batch, tgt_batch, src_lang, trg_lang, batch_size))
+            similarities.append(laser_filter(laser_model, src_batch, trg_batch, src_lang, trg_lang, batch_size))
             progress_bar.update(1)
 
     return serialize_list(similarities)
