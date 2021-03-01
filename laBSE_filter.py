@@ -22,7 +22,7 @@ def get_args_parser():
                             type=int,
                             default= 4096, 
                             help="batch size to use with laser filter")
-    parser.add_argument("--laser_thresh", 
+    parser.add_argument("--thresh", 
                             type=int, 
                             help="threshold percentage for laser similarity (0-100)")
     parser.add_argument("-s",
