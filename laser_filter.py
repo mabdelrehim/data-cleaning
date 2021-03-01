@@ -3,16 +3,17 @@ from pathlib import Path
 import pandas as pd
 import os
 import time
-from multiprocessing import Pool
 from utils import bitext_utils as bitext_utils
 from utils import sentence_utils as sentence_utils
-from my_helping_functions import parallelize_np_array, parallelize_list, serialize_list
 import fasttext
 from laserembeddings import Laser
 import camel_tools as camel
 from camel_tools.utils.charmap import CharMapper
 import argparse
 from pathlib import Path
+import pandas as pd
+import os
+import time
 import fasttext
 from laserembeddings import Laser
 from tqdm import tqdm
@@ -52,13 +53,7 @@ def get_args_parser():
 
     return parser
 
-def my_cosine_similarity(embeddings_a, embeddings_b):
-    similarities=[]
-    for a, b in zip(embeddings_a, embeddings_b):
-        similarities.append(cosine_similarity([a], [b]).flatten()[0])
-    return similarities
-
-def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
+def batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, batch_size=2048):
     """
     
     The laser model tries to embed sentences that are of the same meaning with similar embeddings
@@ -68,63 +63,40 @@ def laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, ba
     start = time.time()
     i = 0
     embeddings_a = []
-    #with tqdm(total=len(sources) // batch_size) as pbar:
-    while i < len(sources):
-        embeddings_a.extend(laser_model.embed_sentences(
-        sources[i:i+batch_size],
-        lang=src_lang))
-        i = i + batch_size
-        #    pbar.update(1)
+    with tqdm(total=len(sources) // batch_size) as pbar:
+        while i < len(sources):
+            embeddings_a.extend(laser_model.embed_sentences(
+            sources[i:i+batch_size],
+            lang=src_lang))
+            i = i + batch_size
+            pbar.update(1)
     end = time.time()
     elapsed = end - start
-    #print(f"---- Calculated laser embeddings for {len(sources)} sentences from source language in {elapsed // 60},  mins , {elapsed % 60} ,  secs")
-    #print(np.array(embeddings_a).shape)
+    print(f"---- Calculated laser embeddings for {len(sources)} sentences from source language in {elapsed // 60},  mins , {elapsed % 60} ,  secs")
+    print(np.array(embeddings_a).shape)
     start = time.time()
     i = 0
     embeddings_b = []
-    #with tqdm(total=len(targets) // batch_size) as pbar:
-    while i < len(targets):
-        embeddings_b.extend(laser_model.embed_sentences(
-        targets[i:i+batch_size],
-        lang=trg_lang))
-        i = i + batch_size
-        #    pbar.update(1)
+    with tqdm(total=len(targets) // batch_size) as pbar:
+        while i < len(targets):
+            embeddings_b.extend(laser_model.embed_sentences(
+            targets[i:i+batch_size],
+            lang=trg_lang))
+            i = i + batch_size
+            pbar.update(1)
     end = time.time()
     elapsed = end - start
-    #print(f"---- Calculated laser embeddings for {len(targets)} sentences from target language in {elapsed // 60},  mins , {elapsed % 60},  secs")
-    #print(np.array(embeddings_b).shape)
+    print(f"---- Calculated laser embeddings for {len(targets)} sentences from target language in {elapsed // 60},  mins , {elapsed % 60},  secs")
+    print(np.array(embeddings_b).shape)
     similarities = []
     start = time.time()
-    for a, b in zip(embeddings_a, embeddings_b):
+    for a, b in tqdm(zip(embeddings_a, embeddings_b)):
         similarities.append(cosine_similarity([a], [b]).flatten()[0])
-    
-    #pool=Pool()
-    #embeddings_a, embedding_b=parallelize_np_array(embeddings_a, os.cpu_count()), parallelize_np_array(embeddings_b, os.cpu_count())
-    #similarities=serialize_list(list(pool.starmap(my_cosine_similarity, zip(embeddings_a, embeddings_b))))
-    #pool.close()
-    #pool.join()
     end = time.time()
     elapsed = end - start
-    #print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
+    print(f"---- Calculated cosine for {len(targets)} pairs in {elapsed // 60},  mins , {elapsed} % 60,  secs")
     return similarities
 
-def batched_laser_filter(laser_model, sources, targets, src_lang: str, trg_lang: str, cosine_batch_size=-1,  batch_size=2048):
-    """
-    This function is made to decrease memory used by laser filtering.
-    """
-    if cosine_batch_size==-1:
-        cosine_batch_size=2*batch_size
-
-    num_batches=len(sources)//cosine_batch_size
-    sources, targets = parallelize_list(sources, num_batches), parallelize_list(targets, num_batches)
-    similarities=[]
-
-    with tqdm(total=num_batches) as progress_bar:
-        for src_batch, trg_batch in zip(sources, targets):
-            similarities.append(laser_filter(laser_model, src_batch, trg_batch, src_lang, trg_lang, batch_size))
-            progress_bar.update(1)
-
-    return serialize_list(similarities)
 
 
 def main(args):
