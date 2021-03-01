@@ -87,7 +87,7 @@ def batched_laBSE_filter(preprocessor, encoder, sources, targets, batch_size=50)
     print(np.array(embeddings_b).shape)
     similarities = []
     start = time.time()
-    for a, b in tqdm(zip(embeddings_a, embeddings_b)):
+    for a, b in tqdm(zip(embeddings_a, embeddings_b), total=len(embeddings_a)):
         similarities.append(cosine_similarity([a], [b]).flatten()[0])
     end = time.time()
     elapsed = end - start
