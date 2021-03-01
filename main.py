@@ -20,7 +20,7 @@ def get_args_parser():
     parser.add_argument("--batch_size", 
                             type=int,
                             default= 4096, 
-                            help="batch size to use when using the LTP chinese segmenter (used if one of src_lang or trg_lang is zh)")
+                            help="batch size to use if using the LTP chinese segmenter (otherwise ignored) (used if one of src_lang or trg_lang is zh)")
     parser.add_argument("-s",
                             "--src_lang", 
                             type=str, 
@@ -168,8 +168,8 @@ def main(args):
             # add new line character after every sentence
             df[args.src_lang] = df[args.src_lang].apply(lambda x: x + "\n")
             df[args.trg_lang] = df[args.trg_lang].apply(lambda x: x + "\n")
-            dest_file_src = open(os.path.join(dataset, subset + "." + args.src_lang + ".clean"), "w")
-            dest_file_trg = open(os.path.join(dataset, subset + "." + args.trg_lang + ".clean"), "w")
+            dest_file_src = open(os.path.join(dataset, subset + "." + args.src_lang + ".clean2"), "w")
+            dest_file_trg = open(os.path.join(dataset, subset + "." + args.trg_lang + ".clean2"), "w")
             dest_file_src.writelines(df[args.src_lang].values.tolist())
             dest_file_trg.writelines(df[args.trg_lang].values.tolist())
         end_all = time.time()
