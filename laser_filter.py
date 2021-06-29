@@ -106,8 +106,8 @@ def main(args):
         for subset in args.prefixes.split(","):
             print(f'-- Applying laser filter to {dataset}/{subset}')
 
-            data_file_src = open(os.path.join(dataset, subset + "." + args.src_lang + ".clean"), "r")
-            data_file_trg = open(os.path.join(dataset, subset + "." + args.trg_lang + ".clean"), "r")
+            data_file_src = open(os.path.join(dataset, subset + "." + args.src_lang), "r")
+            data_file_trg = open(os.path.join(dataset, subset + "." + args.trg_lang ), "r")
 
             src_sents = data_file_src.readlines()
             trg_sents = data_file_trg.readlines()
@@ -131,8 +131,8 @@ def main(args):
             removed = before - after
             elapsed = end - start
             print("---- Removed ", removed, " pairs that are too different in lengths", elapsed // 60, " mins ", elapsed % 60, " secs")
-            dest_file_src = open(os.path.join(dataset, subset + "." + args.src_lang + ".clean_filtered"), "w")
-            dest_file_trg = open(os.path.join(dataset, subset + "." + args.trg_lang + ".clean_filtered"), "w")
+            dest_file_src = open(os.path.join(dataset, subset + "." + args.src_lang + ".laser_filtered"), "w")
+            dest_file_trg = open(os.path.join(dataset, subset + "." + args.trg_lang + ".laser_filtered"), "w")
             dest_file_src.writelines(df[args.src_lang].values.tolist())
             dest_file_trg.writelines(df[args.trg_lang].values.tolist())
 
